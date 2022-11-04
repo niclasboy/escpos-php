@@ -114,27 +114,30 @@ class item
 {
     private $name;
     private $price;
+    private $amount;
     private $dollarSign;
 
-    public function __construct($name = '', $price = '', $dollarSign = false)
+    public function __construct($name = '', $amount='' , $price = '', $dollarSign = true)
     {
         $this->name = $name;
+        $this->amount = $amount;
         $this->price = $price;
         $this->dollarSign = $dollarSign;
     }
-
     public function getAsString($width = 48)
-    {
+    {        
+        $sign = ($this->dollarSign ? ' €' : '');
         $rightCols = 10;
         $leftCols = $width - $rightCols;
         if ($this->dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
-        $left = str_pad($this->name, $leftCols);
+        
+        $firstRow = $this->name
+        $left = str_pad($this->price . $sign . " * " . $this->amount, $leftCols);
+        $right = str_pad(($this->price * $this->amount). $sign, $rightCols, ' ', STR_PAD_LEFT);
 
-        $sign = ($this->dollarSign ? '$ ' : '');
-        $right = str_pad($sign . $this->price, $rightCols, ' ', STR_PAD_LEFT);
-        return "$left$right\n";
+        return "$firstRow\n$left$right\n";
     }
 
     public function __toString()
