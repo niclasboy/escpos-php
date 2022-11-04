@@ -117,7 +117,7 @@ class item
     private $amount;
     private $dollarSign;
 
-    public function __construct($name = '', $amount='' , $price = '', $dollarSign = true)
+    public function __construct($name = '', $amount=0 , $price = 0, $dollarSign = true)
     {
         $this->name = $name;
         $this->amount = $amount;
@@ -132,12 +132,12 @@ class item
         if ($this->dollarSign) {
             $leftCols = $leftCols / 2 - $rightCols / 2;
         }
-        
-        $firstRow = $this->name
+        $sum = ($this->price * $this->amount);
+        $firstRow = $this->name;
         $left = str_pad($this->price . $sign . " * " . $this->amount, $leftCols);
-        $right = str_pad(($this->price * $this->amount). $sign, $rightCols, ' ', STR_PAD_LEFT);
+        $right = str_pad(. $sign, $rightCols, ' ', STR_PAD_LEFT);
 
-        return "$firstRow\n$left$right\n";
+        return array("sum" => $sum, "print" => "$firstRow\n$left$right\n");
     }
 
     public function __toString()
